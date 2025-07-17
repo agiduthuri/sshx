@@ -1,3 +1,5 @@
+// Package impl - impl_base.go provides the base implementation for all application types
+// This base class contains common functionality shared by all application implementations
 package impl
 
 import (
@@ -8,12 +10,26 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// BaseImpl provides common functionality for all application implementations
+// It handles connection management, peer identification, and basic I/O operations
+// All specific implementations (SSH, VNC, SCP, etc.) embed this base structure
 type BaseImpl struct {
-	HId        string
-	conn       *net.Conn
-	Parent     string
-	PId        string
-	lock       sync.Mutex
+	// HId is the host identifier for this implementation instance
+	HId string
+	
+	// conn is the network connection used for communication
+	conn *net.Conn
+	
+	// Parent is the ID of the parent connection or session
+	Parent string
+	
+	// PId is the peer identifier for the remote end
+	PId string
+	
+	// lock provides thread-safe access to the connection
+	lock sync.Mutex
+	
+	// ConnectNow indicates whether this implementation needs an active connection
 	ConnectNow bool
 }
 
